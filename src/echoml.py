@@ -311,7 +311,7 @@ class KMClusterMap:
     Note : It is likely that this object class will eventually be encapsulated by more advanced function sets in the future.
     Note : This function is not yet stable becasue of MVBS considerations.
     """
-    def __init__(self, EK_data_path, EK_data_filenames, save_path, sonar_model, frequency_list, cluster_count, random_state = None, n_init = 10, max_iter = 300, model = "DIRECT", cluster_color_map = "viridis", echogram_color_map = "viridis", plot = True, data_reduction_type = None, range_meter_bin = None, ping_time_bin = None, range_sample_num = None, ping_num = None, remove_noise = True, ping_time_begin = None, ping_time_end = None, range_sample_begin = None, range_sample_end = None, line_files = None, region_files = None ):
+    def __init__(self, EK_data_path, EK_data_filenames, save_path, sonar_model, frequency_list, cluster_count, random_state = None, n_init = 10, max_iter = 300, model = "DIRECT", cluster_color_map = "viridis", echogram_color_map = "viridis", plot = True, data_reduction_type = None, range_bin = None, ping_time_bin = None, range_sample_num = None, ping_num = None, remove_noise = True, ping_time_begin = None, ping_time_end = None, range_sample_begin = None, range_sample_end = None, line_files = None, region_files = None ):
            
         """_summary_
 
@@ -361,7 +361,7 @@ class KMClusterMap:
 
         self.plot = plot # Boolean state of weather or not plotting is enabled.
         self.data_reduction_type = data_reduction_type # MVBS parametrization.
-        self.range_meter_bin = range_meter_bin # MVBS parametrization.
+        #self.range_meter_bin = range_meter_bin # MVBS parametrization.
         self.ping_time_bin = ping_time_bin # MVBS parametrization.
         
         self.range_sample_num = range_sample_num # MVBS parametrization.
@@ -424,8 +424,8 @@ class KMClusterMap:
             self.Sv = self.__drop_nans(self.Sv)
             if self.remove_noise == True and self.range_sample_num != None and self.ping_num != None: 
                 self.Sv = self.__remove_noise(self.Sv, self.range_sample_num, self.ping_num)     
-            if self.range_meter_bin != None and self.ping_time_bin != None:               
-                self.Sv = self.__configure_PU_MVBS(self.Sv, self.range_meter_bin, self.ping_time_bin)                   # Process routine. This deals with MVBS parametrization.       
+            #if self.range_meter_bin != None and self.ping_time_bin != None:               
+            #    self.Sv = self.__configure_PU_MVBS(self.Sv, self.range_meter_bin, self.ping_time_bin)                   # Process routine. This deals with MVBS parametrization.       
             if self.ping_num != None and self.range_sample_num != None:          
                 self.Sv = self.__configure_SN_MVBS( self.Sv, self.ping_num, self.range_sample_num )                             
             
@@ -512,6 +512,7 @@ class KMClusterMap:
                     
                 
     def __construct_file_name(self, file_path):
+        print(file_path)
         return file_path.split("."+file_path.split(".")[-1])[0].replace(".","").split("/")[-1] # The filename without the path prefix or extension.
         
     def __construct_frequency_set_string(self , frequency_list):
@@ -574,7 +575,7 @@ class KMClusterMap:
         if file_path.split(".")[-1] == "raw": # If sonar data file provided was a .raw file.
 
             logger.info('Attempting to convert (' + file_path + ") to a .nc format...")                                    # Logging message.
-            
+            print(file_path)
             ed = ep.open_raw(raw_file = file_path, sonar_model = sonar_model) # Principle echopype conversion function. This provides echodata object.
             logger.info('Saving .nc file converted from .raw format as (' + "/nc_files" + file_path + ")...")     # Logging message.
             
@@ -742,7 +743,7 @@ class KMClusterMap:
         logger.info('Calculating MVBS using reduction by physical units.')  # Logging message.
         logger.info('   range_meter_bin = ' + str(range_meter_bin))    # Logging message.
         logger.info('   ping_time_bin = ' + str(ping_time_bin))        # Logging message.
-        self.Sv = ep.commongrid.compute_MVBS(Sv, range_meter_bin = range_meter_bin, ping_time_bin = ping_time_bin )
+        self.Sv = ep.commongrid.compute_MVBS(Sv, range_bin = range_meter_bin, ping_time_bin = ping_time_bin )
                 
         return Sv
     
@@ -918,7 +919,7 @@ def main(): # Defines main method. This source code serves as a python module as
                 # MVBS & Data Reduction
                 
                 data_reduction_type = data["data_reduction"]["data_reduction_type"],                # Must be one of two string options, "physical_units" or "sample_number" or comment out to default to None .
-                range_meter_bin = data["data_reduction"]["range_meter_bin"],                        # Range meter resolution .
+                range_bin = data["data_reduction"]["range_bin"],                        # Range meter resolution .
                 ping_time_bin = data["data_reduction"]["ping_time_bin"],                            # Ping time resolution .
                 range_sample_num = data["data_reduction"]["range_sample_num"],                      # Range sample resolution.
                 ping_num = data["data_reduction"]["ping_num"],                                      # Ping sample resoluition.

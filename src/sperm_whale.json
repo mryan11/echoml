@@ -1,6 +1,6 @@
 {
     "path_config" : {
-        "EK_data_path" : "/home/mryan/Desktop/echoml/examples/resources",
+        "EK_data_path" : "C:\\Users\\michael.ryan\\Documents\\GitHub\\echoml\\src\\echoml_raws",
         "EK_data_filenames" : ["HB1603_L1-D20160707-T194743.raw"],
         "save_path" : "generated"
         },
@@ -25,7 +25,7 @@
     },
     "data_reduction" : {
         "data_reduction_type" : "sample_number",
-        "range_meter_bin" : 1,
+        "range_bin" : "1m",
         "ping_time_bin" : "1S",
         "range_sample_num" : 1,
         "ping_num" : 1
@@ -43,12 +43,12 @@
         ],
         "line_files" : [ 
             {
-                "path" : "resources/HB1603_SpermWhaleDive_07072016_1948_UTC.evl",
+                "path" : "C:\\Users\\michael.ryan\\Documents\\GitHub\\echoml\\src\\echoml_raws\\HB1603_SpermWhaleDive_07072016_1948_UTC.evl",
                 "depth_offset" : [ 2000, "below"],
                 "ping_time_offset" : [ 0, "right"]
             },
             {
-                "path" : "resources/HB1603_SpermWhaleDive_07072016_1948_UTC.evl",
+                "path" : "C:\\Users\\michael.ryan\\Documents\\GitHub\\echoml\\src\\echoml_raws\\HB1603_SpermWhaleDive_07072016_1948_UTC.evl",
                 "depth_offset" : [ -2000, "above"],
                 "ping_time_offset" : [ 0, "right"]
             }
